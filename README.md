@@ -39,7 +39,7 @@ GameFrameX 的 Mono 生命周期组件
 - 当编写监听器回调函数时，请注意不要在这些函数中执行耗时操作，以免影响游戏性能。
 - 正确管理事件监听器的注册和注销可以帮助避免内存泄露等问题。
 
-请注意，它依赖具体框架实现的 `IEventManager` 接口。若要在项目中使用它，需要这些接口的具体实现。
+注意：此组件依赖于Event 组件：https://github.com/AlianBlank/com.alianblank.gameframex.unity.event
 
 # 使用方式(任选其一)
 
