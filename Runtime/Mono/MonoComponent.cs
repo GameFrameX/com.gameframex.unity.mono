@@ -1,5 +1,5 @@
 ﻿using System;
-using GameFrameX.Event;
+using GameFrameX.Event.Runtime;
 using GameFrameX.Runtime;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ namespace GameFrameX.Mono.Runtime
     public class MonoComponent : GameFrameworkComponent
     {
         private IMonoManager _monoManager;
-        private IEventManager _eventManager;
+        private EventComponent m_EventComponent;
 
         protected override void Awake()
         {
@@ -26,8 +26,8 @@ namespace GameFrameX.Mono.Runtime
                 return;
             }
 
-            _eventManager = GameFrameworkEntry.GetModule<IEventManager>();
-            if (_eventManager == null)
+            m_EventComponent = GameEntry.GetComponent<EventComponent>();
+            if (m_EventComponent == null)
             {
                 Log.Fatal("Event manager is invalid.");
                 return;
@@ -65,7 +65,7 @@ namespace GameFrameX.Mono.Runtime
         private void OnApplicationFocus(bool focusStatus)
         {
             _monoManager.OnApplicationFocus(focusStatus);
-            _eventManager.Fire(this, OnApplicationFocusChangedEventArgs.Create(focusStatus));
+            m_EventComponent.Fire(this, OnApplicationFocusChangedEventArgs.Create(focusStatus));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace GameFrameX.Mono.Runtime
         private void OnApplicationPause(bool pauseStatus)
         {
             _monoManager.OnApplicationPause(pauseStatus);
-            _eventManager.Fire(this, OnApplicationPauseChangedEventArgs.Create(pauseStatus));
+            m_EventComponent.Fire(this, OnApplicationPauseChangedEventArgs.Create(pauseStatus));
         }
 
         /// <summary>
