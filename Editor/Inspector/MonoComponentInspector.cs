@@ -12,37 +12,11 @@ using UnityEditor;
 namespace GameFrameX.Mono.Editor
 {
     [CustomEditor(typeof(MonoComponent))]
-    internal sealed class MonoComponentInspector : GameFrameworkInspector
+    internal sealed class MonoComponentInspector : ComponentTypeComponentInspector
     {
-        public override void OnInspectorGUI()
+        protected override void RefreshTypeNames()
         {
-            base.OnInspectorGUI();
-
-            /*
-            if (!EditorApplication.isPlaying)
-            {
-                EditorGUILayout.HelpBox("Available during runtime only.", MessageType.Info);
-                return;
-            }
-
-            var t = (FsmComponent)target;
-
-            if (IsPrefabInHierarchy(t.gameObject))
-            {
-                EditorGUILayout.LabelField("FSM Count", t.Count.ToString());
-
-                var fsms = t.GetAllFsmList();
-                foreach (FsmBase fsm in fsms)
-                {
-                    DrawFsm(fsm);
-                }
-            }*/
-
-            Repaint();
-        }
-
-        private void OnEnable()
-        {
+            RefreshComponentTypeNames(typeof(IMonoManager));
         }
     }
 }
