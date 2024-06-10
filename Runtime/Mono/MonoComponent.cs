@@ -66,7 +66,10 @@ namespace GameFrameX.Mono.Runtime
         private void OnApplicationFocus(bool focusStatus)
         {
             _monoManager.OnApplicationFocus(focusStatus);
-            m_EventComponent.Fire(this, OnApplicationFocusChangedEventArgs.Create(focusStatus));
+            if (m_EventComponent != null)
+            {
+                m_EventComponent.Fire(this, OnApplicationFocusChangedEventArgs.Create(focusStatus));
+            }
         }
 
         /// <summary>
@@ -76,7 +79,10 @@ namespace GameFrameX.Mono.Runtime
         private void OnApplicationPause(bool pauseStatus)
         {
             _monoManager.OnApplicationPause(pauseStatus);
-            m_EventComponent.Fire(this, OnApplicationPauseChangedEventArgs.Create(pauseStatus));
+            if (m_EventComponent != null)
+            {
+                m_EventComponent.Fire(this, OnApplicationPauseChangedEventArgs.Create(pauseStatus));
+            }
         }
 
         /// <summary>
