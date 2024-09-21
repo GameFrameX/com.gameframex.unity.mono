@@ -4,7 +4,8 @@ using GameFrameX.Runtime;
 
 namespace GameFrameX.Mono.Runtime
 {
-    public class MonoManager : GameFrameworkModule, IMonoManager
+    [UnityEngine.Scripting.Preserve]
+    public sealed class MonoManager : GameFrameworkModule, IMonoManager
     {
         private static readonly object Lock = new object();
 
