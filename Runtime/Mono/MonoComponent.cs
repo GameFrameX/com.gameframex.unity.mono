@@ -17,7 +17,7 @@ namespace GameFrameX.Mono.Runtime
 
         protected override void Awake()
         {
-            ImplementationComponentType = Type.GetType(componentType);
+            ImplementationComponentType = Utility.Assembly.GetType(componentType);
             InterfaceComponentType = typeof(IMonoManager);
             base.Awake();
             _monoManager = GameFrameworkEntry.GetModule<IMonoManager>();
