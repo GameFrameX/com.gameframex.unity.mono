@@ -1,6 +1,38 @@
+// ==========================================================================================
+//  GameFrameX 组织及其衍生项目的版权、商标、专利及其他相关权利
+//  GameFrameX organization and its derivative projects' copyrights, trademarks, patents, and related rights
+//  均受中华人民共和国及相关国际法律法规保护。
+//  are protected by the laws of the People's Republic of China and relevant international regulations.
+// 
+//  使用本项目须严格遵守相应法律法规及开源许可证之规定。
+//  Usage of this project must strictly comply with applicable laws, regulations, and open-source licenses.
+// 
+//  本项目采用 MIT 许可证与 Apache License 2.0 双许可证分发，
+//  This project is dual-licensed under the MIT License and Apache License 2.0,
+//  完整许可证文本请参见源代码根目录下的 LICENSE 文件。
+//  please refer to the LICENSE file in the root directory of the source code for the full license text.
+// 
+//  禁止利用本项目实施任何危害国家安全、破坏社会秩序、
+//  It is prohibited to use this project to engage in any activities that endanger national security, disrupt social order,
+//  侵犯他人合法权益等法律法规所禁止的行为！
+//  or infringe upon the legitimate rights and interests of others, as prohibited by laws and regulations!
+//  因基于本项目二次开发所产生的一切法律纠纷与责任，
+//  Any legal disputes and liabilities arising from secondary development based on this project
+//  本项目组织与贡献者概不承担。
+//  shall be borne solely by the developer; the project organization and contributors assume no responsibility.
+// 
+//  GitHub 仓库：https://github.com/GameFrameX
+//  GitHub Repository: https://github.com/GameFrameX
+//  Gitee  仓库：https://gitee.com/GameFrameX
+//  Gitee Repository:  https://gitee.com/GameFrameX
+//  官方文档：https://gameframex.doc.alianblank.com/
+//  Official Documentation: https://gameframex.doc.alianblank.com/
+// ==========================================================================================
+
 using System;
 using System.Collections.Generic;
 using GameFrameX.Runtime;
+using UnityEngine;
 
 namespace GameFrameX.Mono.Runtime
 {
@@ -9,23 +41,17 @@ namespace GameFrameX.Mono.Runtime
     {
         private static readonly object Lock = new object();
 
-        private List<Action> _updateQueue = new List<Action>();
-        private List<Action> _invokeUpdateQueue = new List<Action>();
+        private LinkedList<Action<float, float>> _updateQueue = new LinkedList<Action<float, float>>();
 
-        private List<Action> _fixedUpdate = new List<Action>();
-        private List<Action> _invokeFixedUpdate = new List<Action>();
+        private LinkedList<Action<float, float>> _fixedUpdate = new LinkedList<Action<float, float>>();
 
-        private List<Action> _lateUpdate = new List<Action>();
-        private List<Action> _invokeLateUpdate = new List<Action>();
+        private LinkedList<Action<float, float>> _lateUpdate = new LinkedList<Action<float, float>>();
 
-        private List<Action> _destroy = new List<Action>();
-        private List<Action> _invokeDestroy = new List<Action>();
+        private LinkedList<Action> _destroy = new LinkedList<Action>();
 
-        private List<Action<bool>> _onApplicationPause = new List<Action<bool>>();
-        private List<Action<bool>> _invokeOnApplicationPause = new List<Action<bool>>();
+        private LinkedList<Action<bool>> _onApplicationPause = new LinkedList<Action<bool>>();
 
-        private List<Action<bool>> _onApplicationFocus = new List<Action<bool>>();
-        private List<Action<bool>> _invokeOnApplicationFocus = new List<Action<bool>>();
+        private LinkedList<Action<bool>> _onApplicationFocus = new LinkedList<Action<bool>>();
 
 
         /// <summary>
@@ -33,7 +59,9 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         public void FixedUpdate()
         {
-            QueueInvoking(this._invokeFixedUpdate, this._fixedUpdate);
+            UnityEngine.Profiling.Profiler.BeginSample("FixedUpdate");
+            QueueInvoking(this._fixedUpdate, Time.deltaTime, Time.fixedDeltaTime);
+            UnityEngine.Profiling.Profiler.EndSample();
         }
 
         /// <summary>
@@ -41,7 +69,7 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         public void LateUpdate()
         {
-            QueueInvoking(this._invokeLateUpdate, this._lateUpdate);
+            QueueInvoking(this._lateUpdate, Time.deltaTime, Time.fixedDeltaTime);
         }
 
         /// <summary>
@@ -49,7 +77,7 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         public void OnDestroy()
         {
-            QueueInvoking(this._invokeDestroy, this._destroy);
+            QueueInvoking(this._destroy);
         }
 
         /// <summary>
@@ -58,7 +86,7 @@ namespace GameFrameX.Mono.Runtime
         /// <param name="focusStatus">应用程序的焦点状态</param>
         public void OnApplicationFocus(bool focusStatus)
         {
-            QueueInvoking(ref this._invokeOnApplicationFocus, ref this._onApplicationFocus, focusStatus);
+            QueueInvoking(this._onApplicationFocus, focusStatus);
         }
 
         /// <summary>
@@ -67,14 +95,14 @@ namespace GameFrameX.Mono.Runtime
         /// <param name="pauseStatus">应用程序的暂停状态</param>
         public void OnApplicationPause(bool pauseStatus)
         {
-            QueueInvoking(ref this._invokeOnApplicationPause, ref this._onApplicationPause, pauseStatus);
+            QueueInvoking(this._onApplicationPause, pauseStatus);
         }
 
         /// <summary>
         /// 添加一个在 LateUpdate 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数</param>
-        public void AddLateUpdateListener(Action action)
+        public void AddLateUpdateListener(Action<float, float> action)
         {
             if (action == null)
             {
@@ -83,7 +111,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                _lateUpdate.Add(action);
+                _lateUpdate.AddLast(action);
             }
         }
 
@@ -91,7 +119,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 LateUpdate 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数</param>
-        public void RemoveLateUpdateListener(Action action)
+        public void RemoveLateUpdateListener(Action<float, float> action)
         {
             if (action == null)
             {
@@ -108,7 +136,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 FixedUpdate 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数</param>
-        public void AddFixedUpdateListener(Action action)
+        public void AddFixedUpdateListener(Action<float, float> action)
         {
             if (action == null)
             {
@@ -117,7 +145,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                _fixedUpdate.Add(action);
+                _fixedUpdate.AddLast(action);
             }
         }
 
@@ -125,7 +153,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 FixedUpdate 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数</param>
-        public void RemoveFixedUpdateListener(Action action)
+        public void RemoveFixedUpdateListener(Action<float, float> action)
         {
             if (action == null)
             {
@@ -134,7 +162,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                this._fixedUpdate.Remove(action);
+                _fixedUpdate.Remove(action);
             }
         }
 
@@ -142,7 +170,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 Update 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数</param>
-        public void AddUpdateListener(Action action)
+        public void AddUpdateListener(Action<float, float> action)
         {
             if (action == null)
             {
@@ -151,7 +179,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                _updateQueue.Add(action);
+                _updateQueue.AddLast(action);
             }
         }
 
@@ -159,7 +187,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 Update 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数</param>
-        public void RemoveUpdateListener(Action action)
+        public void RemoveUpdateListener(Action<float, float> action)
         {
             if (action == null)
             {
@@ -185,7 +213,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                _destroy.Add(action);
+                _destroy.AddLast(action);
             }
         }
 
@@ -219,7 +247,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                _onApplicationPause.Add(action);
+                _onApplicationPause.AddLast(action);
             }
         }
 
@@ -253,7 +281,7 @@ namespace GameFrameX.Mono.Runtime
 
             lock (Lock)
             {
-                _onApplicationFocus.Add(action);
+                _onApplicationFocus.AddLast(action);
             }
         }
 
@@ -285,17 +313,39 @@ namespace GameFrameX.Mono.Runtime
         }
 
 
-        private static void QueueInvoking(List<Action> a, List<Action> b)
+        private static void QueueInvoking(LinkedList<Action> list)
         {
             lock (Lock)
             {
-                ObjectHelper.Swap(ref a, ref b);
+                UnityEngine.Profiling.Profiler.BeginSample("QueueInvoking-Invoke");
 
-                foreach (var action in a)
+                foreach (var action in list)
                 {
                     try
                     {
+                        UnityEngine.Profiling.Profiler.BeginSample($"QueueInvoking-{action.Method.Name}-{action.Target}");
                         action.Invoke();
+                        UnityEngine.Profiling.Profiler.EndSample();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                }
+
+                UnityEngine.Profiling.Profiler.EndSample();
+            }
+        }
+
+        private static void QueueInvoking(LinkedList<Action<float>> list, float value)
+        {
+            lock (Lock)
+            {
+                foreach (var action in list)
+                {
+                    try
+                    {
+                        action.Invoke(value);
                     }
                     catch (Exception e)
                     {
@@ -305,13 +355,29 @@ namespace GameFrameX.Mono.Runtime
             }
         }
 
-        private static void QueueInvoking(ref List<Action<bool>> a, ref List<Action<bool>> b, bool value)
+        private static void QueueInvoking(LinkedList<Action<float, float>> list, float elapseSeconds, float fixedElapseSeconds)
         {
             lock (Lock)
             {
-                ObjectHelper.Swap(ref a, ref b);
+                foreach (var action in list)
+                {
+                    try
+                    {
+                        action.Invoke(elapseSeconds, fixedElapseSeconds);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                }
+            }
+        }
 
-                foreach (var action in a)
+        private static void QueueInvoking(LinkedList<Action<bool>> list, bool value)
+        {
+            lock (Lock)
+            {
+                foreach (var action in list)
                 {
                     try
                     {
@@ -327,7 +393,7 @@ namespace GameFrameX.Mono.Runtime
 
         protected override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            QueueInvoking(this._invokeUpdateQueue, this._updateQueue);
+            QueueInvoking(this._updateQueue, elapseSeconds, realElapseSeconds);
         }
 
         protected override void Shutdown()
