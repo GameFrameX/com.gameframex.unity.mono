@@ -37,7 +37,7 @@ using UnityEngine;
 namespace GameFrameX.Mono.Runtime
 {
     /// <summary>
-    /// Mono 组件
+    /// Mono 组件。
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("GameFrameX/Mono")]
@@ -46,6 +46,9 @@ namespace GameFrameX.Mono.Runtime
         private IMonoManager _monoManager;
         private EventComponent m_EventComponent;
 
+        /// <summary>
+        /// 游戏框架组件初始化。
+        /// </summary>
         protected override void Awake()
         {
             ImplementationComponentType = Utility.Assembly.GetType(componentType);
@@ -93,7 +96,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 当应用程序失去或获得焦点时调用。
         /// </summary>
-        /// <param name="focusStatus">应用程序的焦点状态</param>
+        /// <param name="focusStatus">应用程序的焦点状态。true 表示获得焦点，false 表示失去焦点。</param>
         private void OnApplicationFocus(bool focusStatus)
         {
             _monoManager.OnApplicationFocus(focusStatus);
@@ -106,7 +109,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 当应用程序暂停或恢复时调用。
         /// </summary>
-        /// <param name="pauseStatus">应用程序的暂停状态</param>
+        /// <param name="pauseStatus">应用程序的暂停状态。true 表示暂停，false 表示恢复。</param>
         private void OnApplicationPause(bool pauseStatus)
         {
             _monoManager.OnApplicationPause(pauseStatus);
@@ -117,9 +120,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 添加 LateUpdate 监听器
+        /// 添加 LateUpdate 监听器。
         /// </summary>
-        /// <param name="fun">要添加的 LateUpdate 监听器回调函数</param>
+        /// <param name="fun">要添加的 LateUpdate 监听器回调函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
         public void AddLateUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -132,9 +135,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 移除 LateUpdate 监听器
+        /// 移除 LateUpdate 监听器。
         /// </summary>
-        /// <param name="fun">要移除的 LateUpdate 监听器回调函数</param>
+        /// <param name="fun">要移除的 LateUpdate 监听器回调函数。</param>
         public void RemoveLateUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -147,9 +150,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 添加 OnApplicationFocus 监听器
+        /// 添加 FixedUpdate 监听器。
         /// </summary>
-        /// <param name="fun">要添加的 OnApplicationFocus 监听器回调函数</param>
+        /// <param name="fun">要添加的 FixedUpdate 监听器回调函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
         public void AddFixedUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -162,9 +165,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 移除 OnApplicationFocus 监听器
+        /// 移除 FixedUpdate 监听器。
         /// </summary>
-        /// <param name="fun">要移除的 OnApplicationFocus 监听器回调函数</param>
+        /// <param name="fun">要移除的 FixedUpdate 监听器回调函数。</param>
         public void RemoveFixedUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -177,9 +180,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 添加 Update 监听器
+        /// 添加 Update 监听器。
         /// </summary>
-        /// <param name="fun">要添加的 Update 监听器回调函数</param>
+        /// <param name="fun">要添加的 Update 监听器回调函数。第一个参数是流逝时间，第二个参数是真实流逝时间。</param>
         public void AddUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -192,9 +195,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 移除 Update 监听器
+        /// 移除 Update 监听器。
         /// </summary>
-        /// <param name="fun">要移除的 Update 监听器回调函数</param>
+        /// <param name="fun">要移除的 Update 监听器回调函数。</param>
         public void RemoveUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -207,9 +210,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 添加 Destroy 监听器
+        /// 添加 Destroy 监听器。
         /// </summary>
-        /// <param name="fun">要添加的 Destroy 监听器回调函数</param>
+        /// <param name="fun">要添加的 Destroy 监听器回调函数。</param>
         public void AddDestroyListener(Action fun)
         {
             if (fun == null)
@@ -222,9 +225,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 移除 Destroy 监听器
+        /// 移除 Destroy 监听器。
         /// </summary>
-        /// <param name="fun">要移除的 Destroy 监听器回调函数</param>
+        /// <param name="fun">要移除的 Destroy 监听器回调函数。</param>
         public void RemoveDestroyListener(Action fun)
         {
             if (fun == null)
@@ -237,9 +240,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 添加 OnApplicationPause 监听器
+        /// 添加 OnApplicationPause 监听器。
         /// </summary>
-        /// <param name="fun">要添加的 OnApplicationPause 监听器回调函数</param>
+        /// <param name="fun">要添加的 OnApplicationPause 监听器回调函数。参数为暂停状态。</param>
         public void AddOnApplicationPauseListener(Action<bool> fun)
         {
             if (fun == null)
@@ -252,9 +255,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 移除 OnApplicationPause 监听器
+        /// 移除 OnApplicationPause 监听器。
         /// </summary>
-        /// <param name="fun">要移除的 OnApplicationPause 监听器回调函数</param>
+        /// <param name="fun">要移除的 OnApplicationPause 监听器回调函数。</param>
         public void RemoveOnApplicationPauseListener(Action<bool> fun)
         {
             if (fun == null)
@@ -267,9 +270,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 添加 OnApplicationFocus 监听器
+        /// 添加 OnApplicationFocus 监听器。
         /// </summary>
-        /// <param name="fun">要添加的 OnApplicationFocus 监听器回调函数</param>
+        /// <param name="fun">要添加的 OnApplicationFocus 监听器回调函数。参数为焦点状态。</param>
         public void AddOnApplicationFocusListener(Action<bool> fun)
         {
             if (fun == null)
@@ -282,9 +285,9 @@ namespace GameFrameX.Mono.Runtime
         }
 
         /// <summary>
-        /// 移除 OnApplicationFocus 监听器
+        /// 移除 OnApplicationFocus 监听器。
         /// </summary>
-        /// <param name="fun">要移除的 OnApplicationFocus 监听器回调函数</param>
+        /// <param name="fun">要移除的 OnApplicationFocus 监听器回调函数。</param>
         public void RemoveOnApplicationFocusListener(Action<bool> fun)
         {
             if (fun == null)

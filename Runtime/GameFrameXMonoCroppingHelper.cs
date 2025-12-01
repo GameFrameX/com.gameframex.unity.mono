@@ -34,9 +34,15 @@ using UnityEngine.Scripting;
 
 namespace GameFrameX.Mono.Runtime
 {
+    /// <summary>
+    /// 游戏框架 Mono 裁剪辅助器，防止代码裁剪。
+    /// </summary>
     [Preserve]
     public class GameFrameXMonoCroppingHelper : MonoBehaviour
     {
+        /// <summary>
+        /// 在脚本实例被加载时调用。
+        /// </summary>
         [Preserve]
         private void Start()
         {

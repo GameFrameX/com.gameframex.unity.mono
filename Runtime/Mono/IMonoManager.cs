@@ -53,89 +53,88 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         void OnDestroy();
 
-
         /// <summary>
         /// 当应用程序失去或获得焦点时调用。
         /// </summary>
-        /// <param name="focusStatus">应用程序的焦点状态</param>
+        /// <param name="focusStatus">应用程序的焦点状态。true 表示获得焦点，false 表示失去焦点。</param>
         void OnApplicationFocus(bool focusStatus);
 
         /// <summary>
         /// 当应用程序暂停或恢复时调用。
         /// </summary>
-        /// <param name="pauseStatus">应用程序的暂停状态</param>
+        /// <param name="pauseStatus">应用程序的暂停状态。true 表示暂停，false 表示恢复。</param>
         void OnApplicationPause(bool pauseStatus);
 
         /// <summary>
         /// 添加一个在 LateUpdate 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
         void AddLateUpdateListener(Action<float, float> action);
 
         /// <summary>
         /// 从 LateUpdate 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void RemoveLateUpdateListener(Action<float, float> action);
 
         /// <summary>
         /// 添加一个在 FixedUpdate 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
         void AddFixedUpdateListener(Action<float, float> action);
 
         /// <summary>
         /// 从 FixedUpdate 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void RemoveFixedUpdateListener(Action<float, float> action);
 
         /// <summary>
         /// 添加一个在 Update 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是真实流逝时间。</param>
         void AddUpdateListener(Action<float, float> action);
 
         /// <summary>
         /// 从 Update 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void RemoveUpdateListener(Action<float, float> action);
 
         /// <summary>
         /// 添加一个在 Destroy 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void AddDestroyListener(Action action);
 
         /// <summary>
         /// 从 Destroy 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void RemoveDestroyListener(Action action);
 
         /// <summary>
         /// 添加一个在 OnApplicationPause 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。参数为暂停状态。</param>
         void AddOnApplicationPauseListener(Action<bool> action);
 
         /// <summary>
         /// 从 OnApplicationPause 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void RemoveOnApplicationPauseListener(Action<bool> action);
 
         /// <summary>
         /// 添加一个在 OnApplicationFocus 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。参数为焦点状态。</param>
         void AddOnApplicationFocusListener(Action<bool> action);
 
         /// <summary>
         /// 从 OnApplicationFocus 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         void RemoveOnApplicationFocusListener(Action<bool> action);
     }
 }

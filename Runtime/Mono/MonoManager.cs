@@ -36,6 +36,9 @@ using UnityEngine;
 
 namespace GameFrameX.Mono.Runtime
 {
+    /// <summary>
+    /// Mono 管理器，用于管理 MonoBehaviour 的生命周期事件。
+    /// </summary>
     [UnityEngine.Scripting.Preserve]
     public sealed class MonoManager : GameFrameworkModule, IMonoManager
     {
@@ -83,7 +86,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 当应用程序失去或获得焦点时调用。
         /// </summary>
-        /// <param name="focusStatus">应用程序的焦点状态</param>
+        /// <param name="focusStatus">应用程序的焦点状态。true 表示获得焦点，false 表示失去焦点。</param>
         public void OnApplicationFocus(bool focusStatus)
         {
             QueueInvoking(this._onApplicationFocus, focusStatus);
@@ -92,7 +95,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 当应用程序暂停或恢复时调用。
         /// </summary>
-        /// <param name="pauseStatus">应用程序的暂停状态</param>
+        /// <param name="pauseStatus">应用程序的暂停状态。true 表示暂停，false 表示恢复。</param>
         public void OnApplicationPause(bool pauseStatus)
         {
             QueueInvoking(this._onApplicationPause, pauseStatus);
@@ -101,7 +104,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 添加一个在 LateUpdate 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
         public void AddLateUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -118,7 +121,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 从 LateUpdate 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void RemoveLateUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -135,7 +138,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 添加一个在 FixedUpdate 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
         public void AddFixedUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -152,7 +155,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 从 FixedUpdate 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void RemoveFixedUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -169,7 +172,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 添加一个在 Update 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是真实流逝时间。</param>
         public void AddUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -186,7 +189,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 从 Update 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void RemoveUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -203,7 +206,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 添加一个在 Destroy 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void AddDestroyListener(Action action)
         {
             if (action == null)
@@ -220,7 +223,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 从 Destroy 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void RemoveDestroyListener(Action action)
         {
             if (action == null)
@@ -237,7 +240,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 添加一个在 OnApplicationPause 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。参数为暂停状态。</param>
         public void AddOnApplicationPauseListener(Action<bool> action)
         {
             if (action == null)
@@ -254,7 +257,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 从 OnApplicationPause 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void RemoveOnApplicationPauseListener(Action<bool> action)
         {
             if (action == null)
@@ -271,7 +274,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 添加一个在 OnApplicationFocus 期间调用的监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。参数为焦点状态。</param>
         public void AddOnApplicationFocusListener(Action<bool> action)
         {
             if (action == null)
@@ -288,7 +291,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 从 OnApplicationFocus 中移除一个监听器。
         /// </summary>
-        /// <param name="action">监听器函数</param>
+        /// <param name="action">监听器函数。</param>
         public void RemoveOnApplicationFocusListener(Action<bool> action)
         {
             if (action == null)
@@ -302,6 +305,9 @@ namespace GameFrameX.Mono.Runtime
             }
         }
 
+        /// <summary>
+        /// 释放管理器。
+        /// </summary>
         public void Release()
         {
             this._updateQueue.Clear();
