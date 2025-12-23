@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.0.6...1.1.0) (2025-12-23)
+
+
+### Features
+
+* **ci:** change ci ([f166cc0](https://github.com/gameframex/com.gameframex.unity.mono/commit/f166cc0e54fb4ffa0a1815c3b7dda801f2c4bb55))
+
 # Changelog
 
 ## [1.0.5](https://github.com/GameFrameX/com.gameframex.unity.mono/tree/1.0.5) (2025-06-01)
