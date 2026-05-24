@@ -1,52 +1,76 @@
-﻿## HOMEPAGE
+<div align="center">
+  <img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
+</div>
 
-GameFrameX 的 Mono 生命周期组件
+# Game Frame X Mono
 
-**Mono 生命周期组件 (Mono Component)** - 用于管理游戏中 MonoBehaviour 的事件和更新周期，例如 FixedUpdate、LateUpdate、OnDestroy
-等，并提供了一种简便的方式来添加和移除这些事件的监听。
+[![GitHub release](https://img.shields.io/github/v/release/GameFrameX/com.gameframex.unity.mono?style=flat-square)](https://github.com/GameFrameX/com.gameframex.unity.mono/releases)
+[![License](https://img.shields.io/github/license/GameFrameX/com.gameframex.unity.mono?style=flat-square)](https://github.com/GameFrameX/com.gameframex.unity.mono/blob/main/LICENSE.md)
+[![Documentation](https://img.shields.io/badge/Documentation-Online-blue?style=flat-square)](https://gameframex.doc.alianblank.com)
 
-# 使用文档(文档编写于GPT4)
+**All-in-One Solution for Indie Game Development · Empowering Indie Developers' Dreams**
 
-关于 `MonoComponent` 类的说明文档如下：
+[Documentation](https://gameframex.doc.alianblank.com) · [Quick Start](#quick-start) · [QQ Group](https://qm.qq.com/q/5s5e1e6e6e)
 
-## 概述
+**Language**: **English** | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | [한국어](README.ko.md)
 
-`MonoComponent` 类是基于 Unity 引擎的一个自定义 C# 脚本，它扩展自 `GameFrameworkComponent` 类。它用于管理游戏中 MonoBehaviour 的事件和更新周期，例如 FixedUpdate、LateUpdate、OnDestroy
-等，并提供了一种简便的方式来添加和移除这些事件的监听。
+---
 
-## 功能特点
+## Project Overview
 
-- **MonoManager 集成**: 该类与 `MonoManager` 协作，MonoManager 是用来管理 MonoBehaviour 生命周期相关事件的。
-- **事件管理器**: 利用 `IEventManager` 实例来发布和订阅游戏事件。
-- **生命周期监听**: 通过公共方法，允许添加和移除不同生命周期事件的监听，例如更新（Update）、固定更新（FixedUpdate）等。
+Game Frame X Mono is a Mono lifecycle component for the GameFrameX framework. It manages MonoBehaviour events and update cycles in games, such as FixedUpdate, LateUpdate, OnDestroy, etc., and provides a convenient way to add and remove event listeners.
 
-## 使用方法
+## Quick Start
 
-1. **初始设置**: 在类初始化时（`Awake` 方法内），会尝试获取 `IMonoManager` 和 `IEventManager` 模块。（如果获取失败，会记录一个致命错误并停止进一步执行。）
+### Installation
 
-2. **事件注册和注销**:
-    - **FixedUpdate**: 使用 `AddFixedUpdateListener(Action fun)` 来添加 FixedUpdate 事件的监听，使用 `RemoveFixedUpdateListener(Action fun)` 来移除监听。
-    - **LateUpdate**: 使用 `AddLateUpdateListener(Action fun)` 来添加 LateUpdate 事件的监听，使用 `RemoveLateUpdateListener(Action fun)` 来移除监听。
-    - **OnDestroy**: 使用 `AddDestroyListener(Action fun)` 来添加 OnDestroy 事件的监听，使用 `RemoveDestroyListener(Action fun)` 来移除监听。
-    - **OnApplicationFocus**: 使用 `AddOnApplicationFocusListener(Action<bool> fun)` 来添加 OnApplicationFocus 事件的监听，使用 `RemoveOnApplicationFocusListener(Action<bool> fun)` 来移除监听。
-    - **OnApplicationPause**: 使用 `AddOnApplicationPauseListener(Action<bool> fun)` 来添加 OnApplicationPause 事件的监听，使用 `RemoveOnApplicationPauseListener(Action<bool> fun)` 来移除监听。
+Choose one of the following methods:
 
-3. **监听器方法**: 以上添加和移除监听的方法都会进行非空检查，如果传入的回调函数是 `null`，会记录一个致命错误。这是为了维护程序的健壮性。
-
-## 开发者提示
-
-- 调用公共方法之前请确保 `MonoComponent` 实例已处于激活状态。
-- 当编写监听器回调函数时，请注意不要在这些函数中执行耗时操作，以免影响游戏性能。
-- 正确管理事件监听器的注册和注销可以帮助避免内存泄露等问题。
-
-注意：此组件依赖于Event 组件：https://github.com/AlianBlank/com.alianblank.gameframex.unity.event
-
-# 使用方式(任选其一)
-
-1. 直接在 `manifest.json` 的文件中的 `dependencies` 节点下添加以下内容
+1. Add the following to the `dependencies` section in your project's `manifest.json`:
    ```json
-      {"com.gameframex.unity.mono": "https://github.com/AlianBlank/com.gameframex.unity.mono.git"}
-    ```
-2. 在Unity 的`Packages Manager` 中使用`Git URL` 的方式添加库,地址为：https://github.com/AlianBlank/com.gameframex.unity.mono.git
+   {"com.gameframex.unity.mono": "https://github.com/AlianBlank/com.gameframex.unity.mono.git"}
+   ```
 
-3. 直接下载仓库放置到Unity 项目的`Packages` 目录下。会自动加载识别
+2. Use `Git URL` in Unity's Package Manager:
+   ```
+   https://github.com/AlianBlank/com.gameframex.unity.mono.git
+   ```
+
+3. Download the repository and place it in your Unity project's `Packages` directory. It will be loaded automatically.
+
+## Usage Examples
+
+```csharp
+// Get Mono component
+var monoComponent = GameEntry.GetComponent<MonoComponent>();
+
+// Add FixedUpdate listener
+monoComponent.AddFixedUpdateListener(MyFixedUpdate);
+
+// Add LateUpdate listener
+monoComponent.AddLateUpdateListener(MyLateUpdate);
+
+// Add OnDestroy listener
+monoComponent.AddDestroyListener(MyOnDestroy);
+
+// Add OnApplicationFocus listener
+monoComponent.AddOnApplicationFocusListener(MyOnApplicationFocus);
+
+// Add OnApplicationPause listener
+monoComponent.AddOnApplicationPauseListener(MyOnApplicationPause);
+
+// Remove listeners
+monoComponent.RemoveFixedUpdateListener(MyFixedUpdate);
+monoComponent.RemoveLateUpdateListener(MyLateUpdate);
+monoComponent.RemoveDestroyListener(MyOnDestroy);
+```
+
+## Documentation & Resources
+
+- Documentation: https://gameframex.doc.alianblank.com
+- Repository: https://github.com/GameFrameX/com.gameframex.unity.mono
+- Issues: https://github.com/GameFrameX/com.gameframex.unity.mono/issues
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE.md) for details.
