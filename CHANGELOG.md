@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.0...1.1.1) (2026-05-28)
+
+
+### Bug Fixes
+
+* **ci:** 统一 .github 工作流配置 ([993226b](https://github.com/gameframex/com.gameframex.unity.mono/commit/993226bba48f2164737b61c5d6c190cb3d336028))
+* **deps:** 补充 package.json 中缺失的包依赖 ([7720a6f](https://github.com/gameframex/com.gameframex.unity.mono/commit/7720a6fc32c067e5d5185ff978cc042443c07058))
+
 # [1.1.0](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.0.6...1.1.0) (2025-12-23)
 
 
