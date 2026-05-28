@@ -1,12 +1,13 @@
 {
   "name": "com.gameframex.unity.mono",
   "displayName": "Game Frame X Mono",
-  "category": "Game Framework X",
+  "category": "GameFrameX",
   "description": "Game Frame X Mono Component",
   "version": "1.1.0",
   "unity": "2019.4",
   "keywords": [
-    "Game Framework X"
+    "GameFrameX",
+    "Mono"
   ],
   "repository": {
     "name": "com.gameframex.unity.mono",
