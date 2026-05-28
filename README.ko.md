@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
-</div>
+
+<img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
 
 # Game Frame X Mono
 
@@ -14,6 +14,8 @@
 
 **언어**: [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | **한국어**
 
+</div>
+
 ---
 
 ## 프로젝트 개요
@@ -24,7 +26,28 @@ Game Frame X Mono는 GameFrameX 프레임워크의 Mono 수명 주기 컴포넌�
 
 ### 설치
 
-다음 방법 중 하나를 선택하세요:
+Unity 프로젝트의 `Packages/manifest.json`을 편집하여 `scopedRegistries` 섹션을 추가하세요:
+
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ],
+  "dependencies": {
+    "com.gameframex.unity.mono": "1.1.1"
+  }
+}
+```
+
+`scopes`는 이 레지스트리를 통해 어떤 패키지를 해석할지 제어합니다. `com.gameframex`로 시작하는 패키지만 이 레지스트리에서 가져옵니다.
+
+**다른 설치 방법:**
 
 1. 프로젝트의 `manifest.json` 파일의 `dependencies` 섹션에 다음을 추가:
    ```json

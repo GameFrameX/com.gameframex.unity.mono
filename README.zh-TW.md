@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
-</div>
+
+<img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
 
 # Game Frame X Mono
 
@@ -14,6 +14,8 @@
 
 **語言**: [English](README.md) | [简体中文](README.zh-CN.md) | **繁體中文** | [日本語](README.ja.md) | [한국어](README.ko.md)
 
+</div>
+
 ---
 
 ## 項目簡介
@@ -24,9 +26,30 @@ Game Frame X Mono 是 GameFrameX 框架的 Mono 生命週期組件，用於管�
 
 ### 安裝
 
-任選以下方式之一：
+編輯 Unity 專案的 `Packages/manifest.json`，添加 `scopedRegistries` 部分：
 
-1. 直接在 `manifest.json` 的文件中的 `dependencies` 節點下添加以下內容：
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ],
+  "dependencies": {
+    "com.gameframex.unity.mono": "1.1.1"
+  }
+}
+```
+
+`scopes` 控制哪些套件透過此註冊表解析。只有以 `com.gameframex` 開頭的套件才會從這個註冊表取得。
+
+**其他安裝方式：**
+
+1. 直接在 `manifest.json` 的 `dependencies` 節點下添加以下內容：
    ```json
    {"com.gameframex.unity.mono": "https://github.com/AlianBlank/com.gameframex.unity.mono.git"}
    ```
@@ -36,7 +59,7 @@ Game Frame X Mono 是 GameFrameX 框架的 Mono 生命週期組件，用於管�
    https://github.com/AlianBlank/com.gameframex.unity.mono.git
    ```
 
-3. 直接下載倉庫放置到 Unity 項目的 `Packages` 目錄下，會自動加載識別。
+3. 直接下載倉庫放置到 Unity 專案的 `Packages` 目錄下，會自動加載識別。
 
 ## 使用範例
 

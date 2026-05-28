@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
-</div>
+
+<img src="https://download.alianblank.com/gameframex/gameframex_logo_320.png" alt="Game Frame X Logo" width="160" />
 
 # Game Frame X Mono
 
@@ -14,6 +14,8 @@
 
 **言語**: [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | **日本語** | [한국어](README.ko.md)
 
+</div>
+
 ---
 
 ## プロジェクト概要
@@ -24,7 +26,28 @@ Game Frame X Mono は、GameFrameX フレームワークの Mono ライフサイ
 
 ### インストール
 
-以下のいずれかの方法をお選びください：
+Unity プロジェクトの `Packages/manifest.json` を編集し、`scopedRegistries` セクションを追加してください：
+
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ],
+  "dependencies": {
+    "com.gameframex.unity.mono": "1.1.1"
+  }
+}
+```
+
+`scopes` は、どのパッケージをこのレジストリから解決するかを制御します。`com.gameframex` で始まるパッケージのみがこのレジストリから取得されます。
+
+**その他のインストール方法：**
 
 1. プロジェクトの `manifest.json` の `dependencies` セクションに以下を追加：
    ```json
