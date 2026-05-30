@@ -6,7 +6,7 @@
   "changelogUrl": "https://github.com/gameframex/com.gameframex.unity.mono/blob/main/CHANGELOG.md",
   "licensesUrl": "https://github.com/gameframex/com.gameframex.unity.mono/blob/main/LICENSE.md",
   "description": "GameFrameX Mono — Unity MonoBehaviour lifecycle bridge package. Exposes Update, FixedUpdate, LateUpdate, Destroy, OnApplicationPause, and OnApplicationFocus events to non-MonoBehaviour systems via a listener registration pattern with event args dispatch. Docs: https://gameframex.doc.alianblank.com\n\nGameFrameX Mono — Unity MonoBehaviour 生命周期桥接功能包。将 Update、FixedUpdate、LateUpdate、Destroy、OnApplicationPause 和 OnApplicationFocus 事件通过监听器注册模式暴露给非 MonoBehaviour 系统，并分发事件参数。文档：https://gameframex.doc.alianblank.com",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "unity": "2019.4",
   "keywords": [
     "GameFrameX",

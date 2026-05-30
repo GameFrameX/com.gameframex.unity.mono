@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.1...1.1.2) (2026-05-30)
+
+
+### Bug Fixes
+
+* **mono:** EventComponent 初始化移至 Start，修正 Log.Fatal 格式 ([443d13f](https://github.com/gameframex/com.gameframex.unity.mono/commit/443d13f16303a6a5b2aa1c17f414bd647c7d9d15))
+* **mono:** 修复 QueueInvoking 遍历安全、Time 参数、移除 Release、接口补充 Update ([e910c5d](https://github.com/gameframex/com.gameframex.unity.mono/commit/e910c5d537cb95eacf31775be36829502d371f64))
+* **mono:** 修正 EventArgs Create 方法变量命名 ([f03997f](https://github.com/gameframex/com.gameframex.unity.mono/commit/f03997f796ed017b9a969f1e798eef00bf9f9404))
+
 ## [1.1.1](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.0...1.1.1) (2026-05-28)
 
 
