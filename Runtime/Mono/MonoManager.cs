@@ -63,7 +63,7 @@ namespace GameFrameX.Mono.Runtime
         public void FixedUpdate()
         {
             UnityEngine.Profiling.Profiler.BeginSample("FixedUpdate");
-            QueueInvoking(this._fixedUpdate, Time.deltaTime, Time.fixedDeltaTime);
+            QueueInvoking(this._fixedUpdate, Time.fixedDeltaTime, Time.fixedUnscaledDeltaTime);
             UnityEngine.Profiling.Profiler.EndSample();
         }
 
@@ -72,7 +72,7 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         public void LateUpdate()
         {
-            QueueInvoking(this._lateUpdate, Time.deltaTime, Time.fixedDeltaTime);
+            QueueInvoking(this._lateUpdate, Time.deltaTime, Time.unscaledDeltaTime);
         }
 
         /// <summary>
@@ -305,94 +305,96 @@ namespace GameFrameX.Mono.Runtime
             }
         }
 
-        /// <summary>
-        /// 释放管理器。
-        /// </summary>
-        public void Release()
-        {
-            this._updateQueue.Clear();
-            this._destroy.Clear();
-            this._fixedUpdate.Clear();
-            this._lateUpdate.Clear();
-            this._onApplicationFocus.Clear();
-            this._onApplicationPause.Clear();
-        }
-
-
         private static void QueueInvoking(LinkedList<Action> list)
         {
+            Action[] snapshot;
             lock (Lock)
             {
-                UnityEngine.Profiling.Profiler.BeginSample("QueueInvoking-Invoke");
-
-                foreach (var action in list)
-                {
-                    try
-                    {
-                        UnityEngine.Profiling.Profiler.BeginSample($"QueueInvoking-{action.Method.Name}-{action.Target}");
-                        action.Invoke();
-                        UnityEngine.Profiling.Profiler.EndSample();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
-                }
-
-                UnityEngine.Profiling.Profiler.EndSample();
+                snapshot = new Action[list.Count];
+                list.CopyTo(snapshot, 0);
             }
+
+            UnityEngine.Profiling.Profiler.BeginSample("QueueInvoking-Invoke");
+
+            foreach (var action in snapshot)
+            {
+                try
+                {
+                    UnityEngine.Profiling.Profiler.BeginSample($"QueueInvoking-{action.Method.Name}-{action.Target}");
+                    action.Invoke();
+                    UnityEngine.Profiling.Profiler.EndSample();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+
+            UnityEngine.Profiling.Profiler.EndSample();
         }
 
         private static void QueueInvoking(LinkedList<Action<float>> list, float value)
         {
+            Action<float>[] snapshot;
             lock (Lock)
             {
-                foreach (var action in list)
+                snapshot = new Action<float>[list.Count];
+                list.CopyTo(snapshot, 0);
+            }
+
+            foreach (var action in snapshot)
+            {
+                try
                 {
-                    try
-                    {
-                        action.Invoke(value);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    action.Invoke(value);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
                 }
             }
         }
 
         private static void QueueInvoking(LinkedList<Action<float, float>> list, float elapseSeconds, float fixedElapseSeconds)
         {
+            Action<float, float>[] snapshot;
             lock (Lock)
             {
-                foreach (var action in list)
+                snapshot = new Action<float, float>[list.Count];
+                list.CopyTo(snapshot, 0);
+            }
+
+            foreach (var action in snapshot)
+            {
+                try
                 {
-                    try
-                    {
-                        action.Invoke(elapseSeconds, fixedElapseSeconds);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    action.Invoke(elapseSeconds, fixedElapseSeconds);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
                 }
             }
         }
 
         private static void QueueInvoking(LinkedList<Action<bool>> list, bool value)
         {
+            Action<bool>[] snapshot;
             lock (Lock)
             {
-                foreach (var action in list)
+                snapshot = new Action<bool>[list.Count];
+                list.CopyTo(snapshot, 0);
+            }
+
+            foreach (var action in snapshot)
+            {
+                try
                 {
-                    try
-                    {
-                        action.Invoke(value);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    action.Invoke(value);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
                 }
             }
         }
@@ -400,6 +402,11 @@ namespace GameFrameX.Mono.Runtime
         protected override void Update(float elapseSeconds, float realElapseSeconds)
         {
             QueueInvoking(this._updateQueue, elapseSeconds, realElapseSeconds);
+        }
+
+        void IMonoManager.Update(float elapseSeconds, float realElapseSeconds)
+        {
+            Update(elapseSeconds, realElapseSeconds);
         }
 
         protected override void Shutdown()

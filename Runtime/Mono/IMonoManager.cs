@@ -44,6 +44,13 @@ namespace GameFrameX.Mono.Runtime
         void FixedUpdate();
 
         /// <summary>
+        /// 每帧调用。
+        /// </summary>
+        /// <param name="elapseSeconds">流逝时间。</param>
+        /// <param name="realElapseSeconds">真实流逝时间。</param>
+        void Update(float elapseSeconds, float realElapseSeconds);
+
+        /// <summary>
         /// 在所有 Update 函数调用后每帧调用。
         /// </summary>
         void LateUpdate();
