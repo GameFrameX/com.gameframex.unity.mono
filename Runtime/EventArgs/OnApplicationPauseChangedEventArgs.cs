@@ -73,9 +73,9 @@ namespace GameFrameX.Mono.Runtime
         /// <returns>创建的应用程序是否是暂停状态变化事件。</returns>
         public static OnApplicationPauseChangedEventArgs Create(bool isPause)
         {
-            var loadDictionaryUpdateEventArgs = ReferencePool.Acquire<OnApplicationPauseChangedEventArgs>();
-            loadDictionaryUpdateEventArgs.IsPause = isPause;
-            return loadDictionaryUpdateEventArgs;
+            var onApplicationPauseChangedEventArgs = ReferencePool.Acquire<OnApplicationPauseChangedEventArgs>();
+            onApplicationPauseChangedEventArgs.IsPause = isPause;
+            return onApplicationPauseChangedEventArgs;
         }
 
         /// <summary>

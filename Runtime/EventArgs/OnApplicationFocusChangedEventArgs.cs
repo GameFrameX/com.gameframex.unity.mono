@@ -72,9 +72,9 @@ namespace GameFrameX.Mono.Runtime
         /// <returns>创建的应用程序前后台切换事件。</returns>
         public static OnApplicationFocusChangedEventArgs Create(bool isFocus)
         {
-            var loadDictionaryUpdateChangedEventArgs = ReferencePool.Acquire<OnApplicationFocusChangedEventArgs>();
-            loadDictionaryUpdateChangedEventArgs.IsFocus = isFocus;
-            return loadDictionaryUpdateChangedEventArgs;
+            var onApplicationFocusChangedEventArgs = ReferencePool.Acquire<OnApplicationFocusChangedEventArgs>();
+            onApplicationFocusChangedEventArgs.IsFocus = isFocus;
+            return onApplicationFocusChangedEventArgs;
         }
 
         /// <summary>
