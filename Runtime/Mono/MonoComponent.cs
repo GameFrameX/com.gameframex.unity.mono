@@ -60,7 +60,13 @@ namespace GameFrameX.Mono.Runtime
                 Log.Fatal("Mono manager is invalid.");
                 return;
             }
+        }
 
+        /// <summary>
+        /// 在第一次帧更新之前调用。
+        /// </summary>
+        private void Start()
+        {
             m_EventComponent = GameEntry.GetComponent<EventComponent>();
             if (m_EventComponent == null)
             {
@@ -127,7 +133,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -142,7 +148,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -157,7 +163,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -172,7 +178,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -187,7 +193,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -202,7 +208,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -217,7 +223,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -232,7 +238,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -247,7 +253,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -262,7 +268,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -277,7 +283,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
@@ -292,7 +298,7 @@ namespace GameFrameX.Mono.Runtime
         {
             if (fun == null)
             {
-                Log.Fatal(nameof(fun) + "is invalid.");
+                Log.Fatal(nameof(fun) + " is invalid.");
                 return;
             }
 
