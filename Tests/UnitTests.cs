@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using GameFrameX.Mono.Runtime;
 using NUnit.Framework;
 
 namespace GameFrameX.Mono.Tests

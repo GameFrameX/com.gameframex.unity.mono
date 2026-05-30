@@ -1,7 +1,9 @@
 {
     "name": "GameFrameX.Mono.Tests",
     "references": [
-        "GameFrameX.Mono.Runtime"
+        "GameFrameX.Mono.Runtime",
+        "GameFrameX.Runtime",
+        "GameFrameX.Event.Runtime"
     ],
     "rootNamespace": "GameFrameX.Mono.Tests",
     "includePlatforms": [
