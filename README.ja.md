@@ -51,42 +51,130 @@ Unity プロジェクトの `Packages/manifest.json` を編集し、`scopedRegis
 
 1. プロジェクトの `manifest.json` の `dependencies` セクションに以下を追加：
    ```json
-   {"com.gameframex.unity.mono": "https://github.com/AlianBlank/com.gameframex.unity.mono.git"}
+   {"com.gameframex.unity.mono": "https://github.com/GameFrameX/com.gameframex.unity.mono.git"}
    ```
 
 2. Unity の Package Manager で `Git URL` を使用：
    ```
-   https://github.com/AlianBlank/com.gameframex.unity.mono.git
+   https://github.com/GameFrameX/com.gameframex.unity.mono.git
    ```
 
 3. リポジトリをダウンロードして Unity プロジェクトの `Packages` ディレクトリに配置。自動的にロードされます。
 
-## 使用例
+## 使用方法
+
+### コンポーネントの取得
 
 ```csharp
-// Mono コンポーネントの取得
 var monoComponent = GameEntry.GetComponent<MonoComponent>();
-
-// FixedUpdate リスナーの追加
-monoComponent.AddFixedUpdateListener(MyFixedUpdate);
-
-// LateUpdate リスナーの追加
-monoComponent.AddLateUpdateListener(MyLateUpdate);
-
-// OnDestroy リスナーの追加
-monoComponent.AddDestroyListener(MyOnDestroy);
-
-// OnApplicationFocus リスナーの追加
-monoComponent.AddOnApplicationFocusListener(MyOnApplicationFocus);
-
-// OnApplicationPause リスナーの追加
-monoComponent.AddOnApplicationPauseListener(MyOnApplicationPause);
-
-// リスナーの削除
-monoComponent.RemoveFixedUpdateListener(MyFixedUpdate);
-monoComponent.RemoveLateUpdateListener(MyLateUpdate);
-monoComponent.RemoveDestroyListener(MyOnDestroy);
 ```
+
+### ライフサイクルリスナーの登録
+
+MonoComponent は Unity の `MonoBehaviour` ライフサイクルイベントのコールバック登録をサポートします。すべてのリスナーはいつでも追加・削除できます。
+
+#### Update / FixedUpdate / LateUpdate
+
+これら 3 つのリスナーは 2 つの `float` パラメータを受け取ります：
+- `elapseSeconds` — スケール済みデルタタイム
+- `realElapseSeconds` — 未スケールのデルタタイム
+
+```csharp
+private void OnUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // 毎フレーム呼び出し
+}
+
+private void OnFixedUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // 固定間隔で呼び出し（物理）
+}
+
+private void OnLateUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // すべての Update 完了後に呼び出し
+}
+
+// 登録
+monoComponent.AddUpdateListener(OnUpdate);
+monoComponent.AddFixedUpdateListener(OnFixedUpdate);
+monoComponent.AddLateUpdateListener(OnLateUpdate);
+
+// 不要になったら削除
+monoComponent.RemoveUpdateListener(OnUpdate);
+monoComponent.RemoveFixedUpdateListener(OnFixedUpdate);
+monoComponent.RemoveLateUpdateListener(OnLateUpdate);
+```
+
+#### OnDestroy
+
+```csharp
+private void OnDestroyCallback()
+{
+    // MonoComponent の GameObject が破棄された時に呼び出し
+}
+
+monoComponent.AddDestroyListener(OnDestroyCallback);
+monoComponent.RemoveDestroyListener(OnDestroyCallback);
+```
+
+#### OnApplicationFocus / OnApplicationPause
+
+これらのリスナーは `bool` パラメータを 1 つ受け取り、**デュアル通知パターン**をサポートします — 直接リスナーまたはイベントバスのいずれかを使用できます。
+
+**直接リスナー方式：**
+
+```csharp
+private void OnApplicationFocus(bool isFocus)
+{
+    // isFocus: true = アプリがフォーカス取得, false = フォーカス喪失
+}
+
+private void OnApplicationPause(bool isPause)
+{
+    // isPause: true = アプリ一時停止, false = 再開
+}
+
+monoComponent.AddOnApplicationFocusListener(OnApplicationFocus);
+monoComponent.AddOnApplicationPauseListener(OnApplicationPause);
+
+monoComponent.RemoveOnApplicationFocusListener(OnApplicationFocus);
+monoComponent.RemoveOnApplicationPauseListener(OnApplicationPause);
+```
+
+**イベントバス方式**（`EventComponent` 経由）：
+
+```csharp
+var eventComponent = GameEntry.GetComponent<EventComponent>();
+
+eventComponent.Subscribe(OnApplicationFocusChangedEventArgs.EventId, OnFocusChanged);
+eventComponent.Subscribe(OnApplicationPauseChangedEventArgs.EventId, OnPauseChanged);
+
+private void OnFocusChanged(object sender, GameEventArgs e)
+{
+    var args = (OnApplicationFocusChangedEventArgs)e;
+    if (args.IsFocus)
+    {
+        // アプリがフォーカスを取得
+    }
+}
+
+private void OnPauseChanged(object sender, GameEventArgs e)
+{
+    var args = (OnApplicationPauseChangedEventArgs)e;
+    if (args.IsPause)
+    {
+        // アプリが一時停止
+    }
+}
+```
+
+### 注意事項
+
+- リスナーの登録は**スレッドセーフ**です。
+- コールバック実行中に他のリスナーを安全に追加・削除できます（スナップショットディスパッチ機構）。
+- コールバック内の例外はキャッチされてログに記録され、他のリスナーの実行を**中断しません**。
+- 不要になったリスナーは必ず削除し、メモリリークを防いでください。
 
 ## ドキュメントとリソース
 

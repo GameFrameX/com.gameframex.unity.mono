@@ -51,42 +51,130 @@ Game Frame X Mono 是 GameFrameX 框架的 Mono 生命週期組件，用於管�
 
 1. 直接在 `manifest.json` 的 `dependencies` 節點下添加以下內容：
    ```json
-   {"com.gameframex.unity.mono": "https://github.com/AlianBlank/com.gameframex.unity.mono.git"}
+   {"com.gameframex.unity.mono": "https://github.com/GameFrameX/com.gameframex.unity.mono.git"}
    ```
 
 2. 在 Unity 的 `Packages Manager` 中使用 `Git URL` 的方式添加庫，地址為：
    ```
-   https://github.com/AlianBlank/com.gameframex.unity.mono.git
+   https://github.com/GameFrameX/com.gameframex.unity.mono.git
    ```
 
 3. 直接下載倉庫放置到 Unity 專案的 `Packages` 目錄下，會自動加載識別。
 
-## 使用範例
+## 使用方法
+
+### 取得元件
 
 ```csharp
-// 獲取 Mono 組件
 var monoComponent = GameEntry.GetComponent<MonoComponent>();
-
-// 添加 FixedUpdate 監聽
-monoComponent.AddFixedUpdateListener(MyFixedUpdate);
-
-// 添加 LateUpdate 監聽
-monoComponent.AddLateUpdateListener(MyLateUpdate);
-
-// 添加 OnDestroy 監聽
-monoComponent.AddDestroyListener(MyOnDestroy);
-
-// 添加 OnApplicationFocus 監聽
-monoComponent.AddOnApplicationFocusListener(MyOnApplicationFocus);
-
-// 添加 OnApplicationPause 監聽
-monoComponent.AddOnApplicationPauseListener(MyOnApplicationPause);
-
-// 移除監聽
-monoComponent.RemoveFixedUpdateListener(MyFixedUpdate);
-monoComponent.RemoveLateUpdateListener(MyLateUpdate);
-monoComponent.RemoveDestroyListener(MyOnDestroy);
 ```
+
+### 註冊生命週期監聽
+
+MonoComponent 支援註冊 Unity `MonoBehaviour` 生命週期事件的回呼。所有監聽器均可隨時新增或移除。
+
+#### Update / FixedUpdate / LateUpdate
+
+這三個監聽器接收兩個 `float` 參數：
+- `elapseSeconds` — 縮放後的增量時間
+- `realElapseSeconds` — 未縮放的增量時間
+
+```csharp
+private void OnUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // 每幀呼叫
+}
+
+private void OnFixedUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // 固定間隔呼叫（物理）
+}
+
+private void OnLateUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // 所有 Update 呼叫完畢後執行
+}
+
+// 註冊
+monoComponent.AddUpdateListener(OnUpdate);
+monoComponent.AddFixedUpdateListener(OnFixedUpdate);
+monoComponent.AddLateUpdateListener(OnLateUpdate);
+
+// 不再需要時移除
+monoComponent.RemoveUpdateListener(OnUpdate);
+monoComponent.RemoveFixedUpdateListener(OnFixedUpdate);
+monoComponent.RemoveLateUpdateListener(OnLateUpdate);
+```
+
+#### OnDestroy
+
+```csharp
+private void OnDestroyCallback()
+{
+    // MonoComponent 所在 GameObject 銷毀時呼叫
+}
+
+monoComponent.AddDestroyListener(OnDestroyCallback);
+monoComponent.RemoveDestroyListener(OnDestroyCallback);
+```
+
+#### OnApplicationFocus / OnApplicationPause
+
+這兩個監聽器接收一個 `bool` 參數，並支援**雙重通知模式** — 可以使用直接監聽器，也可以透過事件匯流排訂閱。
+
+**直接監聽方式：**
+
+```csharp
+private void OnApplicationFocus(bool isFocus)
+{
+    // isFocus: true = 應用程式取得焦點, false = 失去焦點
+}
+
+private void OnApplicationPause(bool isPause)
+{
+    // isPause: true = 應用程式暫停, false = 恢復
+}
+
+monoComponent.AddOnApplicationFocusListener(OnApplicationFocus);
+monoComponent.AddOnApplicationPauseListener(OnApplicationPause);
+
+monoComponent.RemoveOnApplicationFocusListener(OnApplicationFocus);
+monoComponent.RemoveOnApplicationPauseListener(OnApplicationPause);
+```
+
+**事件匯流排方式**（透過 `EventComponent`）：
+
+```csharp
+var eventComponent = GameEntry.GetComponent<EventComponent>();
+
+eventComponent.Subscribe(OnApplicationFocusChangedEventArgs.EventId, OnFocusChanged);
+eventComponent.Subscribe(OnApplicationPauseChangedEventArgs.EventId, OnPauseChanged);
+
+private void OnFocusChanged(object sender, GameEventArgs e)
+{
+    var args = (OnApplicationFocusChangedEventArgs)e;
+    if (args.IsFocus)
+    {
+        // 應用程式取得焦點
+    }
+}
+
+private void OnPauseChanged(object sender, GameEventArgs e)
+{
+    var args = (OnApplicationPauseChangedEventArgs)e;
+    if (args.IsPause)
+    {
+        // 應用程式暫停
+    }
+}
+```
+
+### 注意事項
+
+- 監聽器註冊是**執行緒安全**的。
+- 監聽器在回呼執行期間可以安全地新增或移除其他監聽器（快照派發機制）。
+- 回呼中的例外會被捕捉並記錄日誌，**不會**中斷其他監聽器的執行。
+- 不再需要時務必移除監聽器，避免記憶體洩漏。
 
 ## 文檔與資源
 

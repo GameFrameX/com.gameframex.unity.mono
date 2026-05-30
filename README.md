@@ -51,42 +51,130 @@ Edit your Unity project's `Packages/manifest.json` and add the `scopedRegistries
 
 1. Add the following to the `dependencies` section in your project's `manifest.json`:
    ```json
-   {"com.gameframex.unity.mono": "https://github.com/AlianBlank/com.gameframex.unity.mono.git"}
+   {"com.gameframex.unity.mono": "https://github.com/GameFrameX/com.gameframex.unity.mono.git"}
    ```
 
 2. Use `Git URL` in Unity's Package Manager:
    ```
-   https://github.com/AlianBlank/com.gameframex.unity.mono.git
+   https://github.com/GameFrameX/com.gameframex.unity.mono.git
    ```
 
 3. Download the repository and place it in your Unity project's `Packages` directory. It will be loaded automatically.
 
-## Usage Examples
+## Usage
+
+### Getting the Component
 
 ```csharp
-// Get Mono component
 var monoComponent = GameEntry.GetComponent<MonoComponent>();
-
-// Add FixedUpdate listener
-monoComponent.AddFixedUpdateListener(MyFixedUpdate);
-
-// Add LateUpdate listener
-monoComponent.AddLateUpdateListener(MyLateUpdate);
-
-// Add OnDestroy listener
-monoComponent.AddDestroyListener(MyOnDestroy);
-
-// Add OnApplicationFocus listener
-monoComponent.AddOnApplicationFocusListener(MyOnApplicationFocus);
-
-// Add OnApplicationPause listener
-monoComponent.AddOnApplicationPauseListener(MyOnApplicationPause);
-
-// Remove listeners
-monoComponent.RemoveFixedUpdateListener(MyFixedUpdate);
-monoComponent.RemoveLateUpdateListener(MyLateUpdate);
-monoComponent.RemoveDestroyListener(MyOnDestroy);
 ```
+
+### Registering Lifecycle Listeners
+
+MonoComponent allows registering callbacks for Unity's `MonoBehaviour` lifecycle events. All listeners can be added or removed at any time.
+
+#### Update / FixedUpdate / LateUpdate
+
+These three listeners receive two `float` parameters:
+- `elapseSeconds` — scaled delta time
+- `realElapseSeconds` — unscaled delta time
+
+```csharp
+private void OnUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // Called every frame
+}
+
+private void OnFixedUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // Called at fixed intervals (physics)
+}
+
+private void OnLateUpdate(float elapseSeconds, float realElapseSeconds)
+{
+    // Called after all Update calls
+}
+
+// Register
+monoComponent.AddUpdateListener(OnUpdate);
+monoComponent.AddFixedUpdateListener(OnFixedUpdate);
+monoComponent.AddLateUpdateListener(OnLateUpdate);
+
+// Unregister when no longer needed
+monoComponent.RemoveUpdateListener(OnUpdate);
+monoComponent.RemoveFixedUpdateListener(OnFixedUpdate);
+monoComponent.RemoveLateUpdateListener(OnLateUpdate);
+```
+
+#### OnDestroy
+
+```csharp
+private void OnDestroyCallback()
+{
+    // Called when the MonoComponent's GameObject is destroyed
+}
+
+monoComponent.AddDestroyListener(OnDestroyCallback);
+monoComponent.RemoveDestroyListener(OnDestroyCallback);
+```
+
+#### OnApplicationFocus / OnApplicationPause
+
+These listeners receive a `bool` parameter and support a **dual notification pattern** — you can use either direct listeners or the event bus.
+
+**Direct listener approach:**
+
+```csharp
+private void OnApplicationFocus(bool isFocus)
+{
+    // isFocus: true = app gained focus, false = lost focus
+}
+
+private void OnApplicationPause(bool isPause)
+{
+    // isPause: true = app paused, false = resumed
+}
+
+monoComponent.AddOnApplicationFocusListener(OnApplicationFocus);
+monoComponent.AddOnApplicationPauseListener(OnApplicationPause);
+
+monoComponent.RemoveOnApplicationFocusListener(OnApplicationFocus);
+monoComponent.RemoveOnApplicationPauseListener(OnApplicationPause);
+```
+
+**Event bus approach** (via `EventComponent`):
+
+```csharp
+var eventComponent = GameEntry.GetComponent<EventComponent>();
+
+eventComponent.Subscribe(OnApplicationFocusChangedEventArgs.EventId, OnFocusChanged);
+eventComponent.Subscribe(OnApplicationPauseChangedEventArgs.EventId, OnPauseChanged);
+
+private void OnFocusChanged(object sender, GameEventArgs e)
+{
+    var args = (OnApplicationFocusChangedEventArgs)e;
+    if (args.IsFocus)
+    {
+        // App gained focus
+    }
+}
+
+private void OnPauseChanged(object sender, GameEventArgs e)
+{
+    var args = (OnApplicationPauseChangedEventArgs)e;
+    if (args.IsPause)
+    {
+        // App paused
+    }
+}
+```
+
+### Important Notes
+
+- Listener registration is **thread-safe**.
+- Listeners can safely add or remove other listeners during callback invocation (snapshot dispatch).
+- Exceptions in callbacks are caught and logged, and do **not** interrupt other listeners.
+- Always unregister listeners when no longer needed to avoid memory leaks.
 
 ## Documentation & Resources
 
