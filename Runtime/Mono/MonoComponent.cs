@@ -96,6 +96,11 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         private void OnDestroy()
         {
+            if (_monoManager == null)
+            {
+                return;
+            }
+
             _monoManager.OnDestroy();
         }
 
@@ -105,6 +110,11 @@ namespace GameFrameX.Mono.Runtime
         /// <param name="focusStatus">应用程序的焦点状态。true 表示获得焦点，false 表示失去焦点。</param>
         private void OnApplicationFocus(bool focusStatus)
         {
+            if (_monoManager == null)
+            {
+                return;
+            }
+
             _monoManager.OnApplicationFocus(focusStatus);
             if (m_EventComponent != null)
             {
@@ -118,6 +128,11 @@ namespace GameFrameX.Mono.Runtime
         /// <param name="pauseStatus">应用程序的暂停状态。true 表示暂停，false 表示恢复。</param>
         private void OnApplicationPause(bool pauseStatus)
         {
+            if (_monoManager == null)
+            {
+                return;
+            }
+
             _monoManager.OnApplicationPause(pauseStatus);
             if (m_EventComponent != null)
             {
