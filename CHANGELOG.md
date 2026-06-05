@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.2...1.1.3) (2026-06-05)
+
+
+### Bug Fixes
+
+* **mono:** 为生命周期回调添加 _monoManager 空引用守卫 ([3ef5121](https://github.com/gameframex/com.gameframex.unity.mono/commit/3ef51211e4c598b2918e328d7275f3122e5ef133))
+
 ## [1.1.2](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.1...1.1.2) (2026-05-30)
 
 
