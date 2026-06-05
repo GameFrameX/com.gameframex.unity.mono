@@ -184,4 +184,4 @@ private void OnPauseChanged(object sender, GameEventArgs e)
 
 ## 開源協議
 
-本項目遵循 MIT 許可證。詳細信息請查看 [LICENSE](LICENSE.md) 文件。
+詳細信息請查看 [LICENSE](LICENSE.md) 文件。

@@ -184,4 +184,4 @@ private void OnPauseChanged(object sender, GameEventArgs e)
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE.md) for details.
+See [LICENSE](LICENSE.md) for details.
