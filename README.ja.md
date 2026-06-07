@@ -185,6 +185,20 @@ private void OnPauseChanged(object sender, GameEventArgs e)
 - リポジトリ: https://github.com/GameFrameX/com.gameframex.unity.mono
 - Issues: https://github.com/GameFrameX/com.gameframex.unity.mono/issues
 
+
+## 依存関係
+
+| パッケージ | 説明 |
+|----------|------|
+| `com.gameframex.unity.event` | 1.1.0 |
+
+## コミュニティとサポート
+
+- QQグループ: 467608841 / 233840761
+
+## 変更履歴
+
+[Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.mono/releases) で変更履歴を確認してください。
 ## ライセンス
 
 詳細は [LICENSE](LICENSE.md) ファイルを参照してください。

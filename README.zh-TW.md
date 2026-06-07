@@ -185,6 +185,20 @@ private void OnPauseChanged(object sender, GameEventArgs e)
 - 倉庫地址: https://github.com/GameFrameX/com.gameframex.unity.mono
 - 問題反饋: https://github.com/GameFrameX/com.gameframex.unity.mono/issues
 
+
+## 依賴
+
+| 套件 | 說明 |
+|------|------|
+| `com.gameframex.unity.event` | 1.1.0 |
+
+## 社區與支援
+
+- QQ群: 467608841 / 233840761
+
+## 更新日誌
+
+查看 [Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.mono/releases) 了解更新日誌。
 ## 開源協議
 
 詳細信息請查看 [LICENSE](LICENSE.md) 文件。
