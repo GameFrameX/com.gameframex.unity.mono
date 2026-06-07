@@ -4,20 +4,21 @@
 
 # Game Frame X Mono
 
-[![GitHub release](https://img.shields.io/github/v/release/GameFrameX/com.gameframex.unity.mono?style=flat-square)](https://github.com/GameFrameX/com.gameframex.unity.mono/releases)
-[![License](https://img.shields.io/github/license/GameFrameX/com.gameframex.unity.mono?style=flat-square)](https://github.com/GameFrameX/com.gameframex.unity.mono/blob/main/LICENSE.md)
-[![Documentation](https://img.shields.io/badge/Documentation-Online-blue?style=flat-square)](https://gameframex.doc.alianblank.com)
+[![License](https://img.shields.io/github/license/GameFrameX/com.gameframex.unity.mono)](https://github.com/GameFrameX/com.gameframex.unity.mono/blob/main/LICENSE.md)
+[![Version](https://img.shields.io/github/v/release/GameFrameX/com.gameframex.unity.mono)](https://github.com/GameFrameX/com.gameframex.unity.mono/releases)
+[![Documentation](https://img.shields.io/badge/Documentation-docs-blue)](https://gameframex.doc.alianblank.com)
 
-**인디 게임 개발자를 위한 올인원 솔루션 · 인디 개발자의 꿈을 실현**
+인디 게임 개발자를 위한 올인원 솔루션 · 인디 개발자의 꿈을 실현
+
+<br />
 
 [문서](https://gameframex.doc.alianblank.com) · [빠른 시작](#빠른-시작) · [QQ 그룹](https://qm.qq.com/q/5s5e1e6e6e)
 
-**언어**: [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | **한국어**
+<br />
+
+[English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md) | **한국어**
 
 </div>
-
----
-
 ## 프로젝트 개요
 
 Game Frame X Mono는 GameFrameX 프레임워크의 Mono 수명 주기 컴포넌트입니다. FixedUpdate, LateUpdate, OnDestroy 등 MonoBehaviour 이벤트와 업데이트 주기를 관리하며, 이벤트 리스너를 간편하게 추가하고 제거하는 방법을 제공합니다.
