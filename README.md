@@ -29,41 +29,36 @@ Game Frame X Mono is a Mono lifecycle component for the GameFrameX framework. It
 
 ### Installation
 
-Edit your Unity project's `Packages/manifest.json` and add the `scopedRegistries` section:
+Choose one of the following methods:
 
-```json
-{
-  "scopedRegistries": [
-    {
-      "name": "GameFrameX",
-      "url": "https://gameframex.upm.alianblank.uk",
-      "scopes": [
-        "com.gameframex"
-      ]
-    }
-  ],
-  "dependencies": {
-    "com.gameframex.unity.mono": "1.1.1"
-  }
-}
-```
-
-`scopes` controls which packages are resolved through this registry. Only packages whose names start with `com.gameframex` will be fetched from it.
-
-**Alternative methods:**
-
-1. Add the following to the `dependencies` section in your project's `manifest.json`:
+1. Edit your Unity project's `Packages/manifest.json` and add the `scopedRegistries` section:
    ```json
-   {"com.gameframex.unity.mono": "https://github.com/GameFrameX/com.gameframex.unity.mono.git"}
+   {
+     "scopedRegistries": [
+       {
+         "name": "GameFrameX",
+         "url": "https://gameframex.upm.alianblank.uk",
+         "scopes": [
+           "com.gameframex"
+         ]
+       }
+     ],
+     "dependencies": {
+       "com.gameframex.unity.mono": "1.1.3"
+     }
+   }
    ```
 
-2. Use `Git URL` in Unity's Package Manager:
-   ```
-   https://github.com/GameFrameX/com.gameframex.unity.mono.git
-   ```
+   `scopes` controls which packages are resolved through this registry. Only packages whose names start with `com.gameframex` will be fetched from it.
 
-3. Download the repository and place it in your Unity project's `Packages` directory. It will be loaded automatically.
-
+2. Add to `manifest.json` dependencies:
+   ```json
+   {
+      "com.gameframex.unity.mono": "https://github.com/gameframex/com.gameframex.unity.mono.git"
+   }
+   ```
+3. Use **Package Manager** in Unity with **Git URL**: `https://github.com/gameframex/com.gameframex.unity.mono.git`
+4. Clone the repository into your Unity project's `Packages` directory. It will be loaded automatically.
 ## Usage Examples
 
 ### Getting the Component

@@ -29,41 +29,36 @@ Game Frame X Mono は、GameFrameX フレームワークの Mono ライフサイ
 
 ### インストール
 
-Unity プロジェクトの `Packages/manifest.json` を編集し、`scopedRegistries` セクションを追加してください：
+以下のいずれかの方法を選択してください：
 
-```json
-{
-  "scopedRegistries": [
-    {
-      "name": "GameFrameX",
-      "url": "https://gameframex.upm.alianblank.uk",
-      "scopes": [
-        "com.gameframex"
-      ]
-    }
-  ],
-  "dependencies": {
-    "com.gameframex.unity.mono": "1.1.1"
-  }
-}
-```
-
-`scopes` は、どのパッケージをこのレジストリから解決するかを制御します。`com.gameframex` で始まるパッケージのみがこのレジストリから取得されます。
-
-**その他のインストール方法：**
-
-1. プロジェクトの `manifest.json` の `dependencies` セクションに以下を追加：
+1. Unity プロジェクトの `Packages/manifest.json` を編集し、`scopedRegistries` セクションを追加してください：
    ```json
-   {"com.gameframex.unity.mono": "https://github.com/GameFrameX/com.gameframex.unity.mono.git"}
+   {
+     "scopedRegistries": [
+       {
+         "name": "GameFrameX",
+         "url": "https://gameframex.upm.alianblank.uk",
+         "scopes": [
+           "com.gameframex"
+         ]
+       }
+     ],
+     "dependencies": {
+       "com.gameframex.unity.mono": "1.1.3"
+     }
+   }
    ```
 
-2. Unity の Package Manager で `Git URL` を使用：
-   ```
-   https://github.com/GameFrameX/com.gameframex.unity.mono.git
-   ```
+   `scopes` は、どのパッケージをこのレジストリから解決するかを制御します。`com.gameframex` で始まるパッケージのみがこのレジストリから取得されます。
 
-3. リポジトリをダウンロードして Unity プロジェクトの `Packages` ディレクトリに配置。自動的にロードされます。
-
+2. `manifest.json` の `dependencies` に直接追加：
+   ```json
+   {
+      "com.gameframex.unity.mono": "https://github.com/gameframex/com.gameframex.unity.mono.git"
+   }
+   ```
+3. Unity の **Package Manager** で **Git URL** を使用して追加：`https://github.com/gameframex/com.gameframex.unity.mono.git`
+4. リポジトリを Unity プロジェクトの `Packages` ディレクトリにクローンしてください。自動的に読み込まれます。
 ## 使用方法
 
 ### コンポーネントの取得
