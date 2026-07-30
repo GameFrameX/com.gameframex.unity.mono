@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.3...1.1.4) (2026-07-30)
+
+
+### Bug Fixes
+
+* 更新依赖项版本，提升兼容性和功能 ([f3c9d05](https://github.com/gameframex/com.gameframex.unity.mono/commit/f3c9d05709ac475e6019dcc7b387f3e7a6eabbb3))
+
 ## [1.1.3](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.2...1.1.3) (2026-06-05)
 
 
