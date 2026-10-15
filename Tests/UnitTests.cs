@@ -275,7 +275,7 @@ namespace GameFrameX.Mono.Tests
             }
 
             var method = typeof(MonoManager).GetMethod("Shutdown",
-                BindingFlags.Instance | BindingFlags.NonPublic);
+                BindingFlags.Instance | BindingFlags.Public);
             method?.Invoke(manager, null);
         }
     }

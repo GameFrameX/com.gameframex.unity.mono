@@ -47,6 +47,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 初始化应用程序是否是暂停状态变化事件的新实例。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public OnApplicationPauseChangedEventArgs()
         {
             IsPause = false;
@@ -63,6 +64,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 是否暂停。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public bool IsPause { get; private set; }
 
 
@@ -71,6 +73,7 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         /// <param name="isPause">是否是暂停。true 表示暂停，false 表示恢复。</param>
         /// <returns>创建的应用程序是否是暂停状态变化事件。</returns>
+        [UnityEngine.Scripting.Preserve]
         public static OnApplicationPauseChangedEventArgs Create(bool isPause)
         {
             var onApplicationPauseChangedEventArgs = ReferencePool.Acquire<OnApplicationPauseChangedEventArgs>();

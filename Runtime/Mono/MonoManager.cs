@@ -40,7 +40,7 @@ namespace GameFrameX.Mono.Runtime
     /// Mono 管理器，用于管理 MonoBehaviour 的生命周期事件。
     /// </summary>
     [UnityEngine.Scripting.Preserve]
-    public sealed class MonoManager : GameFrameworkModule, IMonoManager
+    public sealed class MonoManager : IGameFrameworkModule, IMonoManager, IUpdatableModule, IShutdownableModule
     {
         private static readonly object Lock = new object();
 
@@ -56,10 +56,10 @@ namespace GameFrameX.Mono.Runtime
 
         private LinkedList<Action<bool>> _onApplicationFocus = new LinkedList<Action<bool>>();
 
-
         /// <summary>
         /// 在固定的帧率下调用。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public void FixedUpdate()
         {
             UnityEngine.Profiling.Profiler.BeginSample("FixedUpdate");
@@ -70,6 +70,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 在所有 Update 函数调用后每帧调用。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public void LateUpdate()
         {
             QueueInvoking(this._lateUpdate, Time.deltaTime, Time.unscaledDeltaTime);
@@ -78,6 +79,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 当 MonoBehaviour 将被销毁时调用。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public void OnDestroy()
         {
             QueueInvoking(this._destroy);
@@ -87,6 +89,7 @@ namespace GameFrameX.Mono.Runtime
         /// 当应用程序失去或获得焦点时调用。
         /// </summary>
         /// <param name="focusStatus">应用程序的焦点状态。true 表示获得焦点，false 表示失去焦点。</param>
+        [UnityEngine.Scripting.Preserve]
         public void OnApplicationFocus(bool focusStatus)
         {
             QueueInvoking(this._onApplicationFocus, focusStatus);
@@ -96,6 +99,7 @@ namespace GameFrameX.Mono.Runtime
         /// 当应用程序暂停或恢复时调用。
         /// </summary>
         /// <param name="pauseStatus">应用程序的暂停状态。true 表示暂停，false 表示恢复。</param>
+        [UnityEngine.Scripting.Preserve]
         public void OnApplicationPause(bool pauseStatus)
         {
             QueueInvoking(this._onApplicationPause, pauseStatus);
@@ -105,6 +109,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 LateUpdate 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddLateUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -122,6 +127,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 LateUpdate 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveLateUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -139,6 +145,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 FixedUpdate 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddFixedUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -156,6 +163,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 FixedUpdate 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveFixedUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -173,6 +181,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 Update 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数。第一个参数是流逝时间，第二个参数是真实流逝时间。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -190,6 +199,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 Update 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveUpdateListener(Action<float, float> action)
         {
             if (action == null)
@@ -207,6 +217,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 Destroy 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddDestroyListener(Action action)
         {
             if (action == null)
@@ -224,6 +235,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 Destroy 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveDestroyListener(Action action)
         {
             if (action == null)
@@ -241,6 +253,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 OnApplicationPause 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数。参数为暂停状态。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddOnApplicationPauseListener(Action<bool> action)
         {
             if (action == null)
@@ -258,6 +271,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 OnApplicationPause 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveOnApplicationPauseListener(Action<bool> action)
         {
             if (action == null)
@@ -275,6 +289,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加一个在 OnApplicationFocus 期间调用的监听器。
         /// </summary>
         /// <param name="action">监听器函数。参数为焦点状态。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddOnApplicationFocusListener(Action<bool> action)
         {
             if (action == null)
@@ -292,6 +307,7 @@ namespace GameFrameX.Mono.Runtime
         /// 从 OnApplicationFocus 中移除一个监听器。
         /// </summary>
         /// <param name="action">监听器函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveOnApplicationFocusListener(Action<bool> action)
         {
             if (action == null)
@@ -399,7 +415,8 @@ namespace GameFrameX.Mono.Runtime
             }
         }
 
-        protected override void Update(float elapseSeconds, float realElapseSeconds)
+        [UnityEngine.Scripting.Preserve]
+        public void Update(float elapseSeconds, float realElapseSeconds)
         {
             QueueInvoking(this._updateQueue, elapseSeconds, realElapseSeconds);
         }
@@ -409,7 +426,8 @@ namespace GameFrameX.Mono.Runtime
             Update(elapseSeconds, realElapseSeconds);
         }
 
-        protected override void Shutdown()
+        [UnityEngine.Scripting.Preserve]
+        public void Shutdown()
         {
             this._updateQueue.Clear();
             this._fixedUpdate.Clear();

@@ -30,27 +30,26 @@
 // ==========================================================================================
 
 using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace GameFrameX.Mono.Runtime
 {
     /// <summary>
     /// 游戏框架 Mono 裁剪辅助器，防止代码裁剪。
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public class GameFrameXMonoCroppingHelper : MonoBehaviour
     {
         /// <summary>
         /// 在脚本实例被加载时调用。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         private void Start()
         {
             _ = typeof(IMonoManager);
             _ = typeof(MonoManager);
             _ = typeof(OnApplicationFocusChangedEventArgs);
             _ = typeof(OnApplicationPauseChangedEventArgs);
-            _ = typeof(MonoComponent);
+            _ = typeof(MonoManager);
         }
     }
 }

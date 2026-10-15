@@ -47,6 +47,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 初始化应用程序前后台切换事件的新实例。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public OnApplicationFocusChangedEventArgs()
         {
             IsFocus = false;
@@ -63,6 +64,7 @@ namespace GameFrameX.Mono.Runtime
         /// <summary>
         /// 是否是前台。
         /// </summary>
+        [UnityEngine.Scripting.Preserve]
         public bool IsFocus { get; private set; }
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         /// <param name="isFocus">是否是前台。true 表示在前台，false 表示在后台。</param>
         /// <returns>创建的应用程序前后台切换事件。</returns>
+        [UnityEngine.Scripting.Preserve]
         public static OnApplicationFocusChangedEventArgs Create(bool isFocus)
         {
             var onApplicationFocusChangedEventArgs = ReferencePool.Acquire<OnApplicationFocusChangedEventArgs>();

@@ -41,10 +41,11 @@ namespace GameFrameX.Mono.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("GameFrameX/Mono")]
+    [GameFrameXAutoComponent(900)]
     public class MonoComponent : GameFrameworkComponent
     {
         private IMonoManager _monoManager;
-        private EventComponent m_EventComponent;
+        private IEventManager m_EventManager;
 
         /// <summary>
         /// 游戏框架组件初始化。
@@ -67,8 +68,8 @@ namespace GameFrameX.Mono.Runtime
         /// </summary>
         private void Start()
         {
-            m_EventComponent = GameEntry.GetComponent<EventComponent>();
-            if (m_EventComponent == null)
+            m_EventManager = GameFrameworkEntry.GetModule<IEventManager>();
+            if (m_EventManager == null)
             {
                 Log.Fatal("Event manager is invalid.");
                 return;
@@ -116,9 +117,9 @@ namespace GameFrameX.Mono.Runtime
             }
 
             _monoManager.OnApplicationFocus(focusStatus);
-            if (m_EventComponent != null)
+            if (m_EventManager != null)
             {
-                m_EventComponent.Fire(this, OnApplicationFocusChangedEventArgs.Create(focusStatus));
+                m_EventManager.Fire(this, OnApplicationFocusChangedEventArgs.Create(focusStatus));
             }
         }
 
@@ -134,9 +135,9 @@ namespace GameFrameX.Mono.Runtime
             }
 
             _monoManager.OnApplicationPause(pauseStatus);
-            if (m_EventComponent != null)
+            if (m_EventManager != null)
             {
-                m_EventComponent.Fire(this, OnApplicationPauseChangedEventArgs.Create(pauseStatus));
+                m_EventManager.Fire(this, OnApplicationPauseChangedEventArgs.Create(pauseStatus));
             }
         }
 
@@ -144,6 +145,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加 LateUpdate 监听器。
         /// </summary>
         /// <param name="fun">要添加的 LateUpdate 监听器回调函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddLateUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -159,6 +161,7 @@ namespace GameFrameX.Mono.Runtime
         /// 移除 LateUpdate 监听器。
         /// </summary>
         /// <param name="fun">要移除的 LateUpdate 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveLateUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -174,6 +177,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加 FixedUpdate 监听器。
         /// </summary>
         /// <param name="fun">要添加的 FixedUpdate 监听器回调函数。第一个参数是流逝时间，第二个参数是固定流逝时间。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddFixedUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -189,6 +193,7 @@ namespace GameFrameX.Mono.Runtime
         /// 移除 FixedUpdate 监听器。
         /// </summary>
         /// <param name="fun">要移除的 FixedUpdate 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveFixedUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -204,6 +209,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加 Update 监听器。
         /// </summary>
         /// <param name="fun">要添加的 Update 监听器回调函数。第一个参数是流逝时间，第二个参数是真实流逝时间。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -219,6 +225,7 @@ namespace GameFrameX.Mono.Runtime
         /// 移除 Update 监听器。
         /// </summary>
         /// <param name="fun">要移除的 Update 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveUpdateListener(Action<float, float> fun)
         {
             if (fun == null)
@@ -234,6 +241,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加 Destroy 监听器。
         /// </summary>
         /// <param name="fun">要添加的 Destroy 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddDestroyListener(Action fun)
         {
             if (fun == null)
@@ -249,6 +257,7 @@ namespace GameFrameX.Mono.Runtime
         /// 移除 Destroy 监听器。
         /// </summary>
         /// <param name="fun">要移除的 Destroy 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveDestroyListener(Action fun)
         {
             if (fun == null)
@@ -264,6 +273,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加 OnApplicationPause 监听器。
         /// </summary>
         /// <param name="fun">要添加的 OnApplicationPause 监听器回调函数。参数为暂停状态。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddOnApplicationPauseListener(Action<bool> fun)
         {
             if (fun == null)
@@ -279,6 +289,7 @@ namespace GameFrameX.Mono.Runtime
         /// 移除 OnApplicationPause 监听器。
         /// </summary>
         /// <param name="fun">要移除的 OnApplicationPause 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveOnApplicationPauseListener(Action<bool> fun)
         {
             if (fun == null)
@@ -294,6 +305,7 @@ namespace GameFrameX.Mono.Runtime
         /// 添加 OnApplicationFocus 监听器。
         /// </summary>
         /// <param name="fun">要添加的 OnApplicationFocus 监听器回调函数。参数为焦点状态。</param>
+        [UnityEngine.Scripting.Preserve]
         public void AddOnApplicationFocusListener(Action<bool> fun)
         {
             if (fun == null)
@@ -309,6 +321,7 @@ namespace GameFrameX.Mono.Runtime
         /// 移除 OnApplicationFocus 监听器。
         /// </summary>
         /// <param name="fun">要移除的 OnApplicationFocus 监听器回调函数。</param>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveOnApplicationFocusListener(Action<bool> fun)
         {
             if (fun == null)
