@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.4...2.0.0) (2026-10-15)
+
+
+* feat(module)!: Mono 模块薄入口化并迁移接口契约 ([69b9022](https://github.com/gameframex/com.gameframex.unity.mono/commit/69b902206f0bd8f82468024905878769ce58d31b))
+
+
+### BREAKING CHANGES
+
+* MonoComponent 序列化字段移除，Play 期经活视图/模块 API 调整。
+
 ## [Unreleased]
 
 ### ⚠ BREAKING CHANGES
