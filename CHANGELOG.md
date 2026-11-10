@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/gameframex/com.gameframex.unity.mono/compare/2.0.0...2.0.1) (2026-11-10)
+
+
+### Bug Fixes
+
+* **mono:** 添加完整 link.xml 防代码裁剪保护 ([441e322](https://github.com/gameframex/com.gameframex.unity.mono/commit/441e322496c5dde97282fd5e69309c9ce2ea069d))
+
 # [2.0.0](https://github.com/gameframex/com.gameframex.unity.mono/compare/1.1.4...2.0.0) (2026-10-15)
 
 
